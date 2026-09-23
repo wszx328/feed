@@ -1,0 +1,490 @@
+/* ========== 游戏进行时界面样式 ========== */
+.game-container {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: 
+    radial-gradient(ellipse at top left, rgba(60,30,90,0.4), transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(100,40,140,0.3), transparent 60%);
+  padding: 15px;
+  gap: 12px;
+  overflow: hidden;
+}
+
+/* 头部：竖排 —— 计时器在最上，结束按钮在其下方，警告文字再下方 */
+.game-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.timer-display {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.timer-display.warning {
+  color: var(--accent2);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { text-shadow: 0 0 10px var(--accent2); }
+  50% { text-shadow: 0 0 30px #fff; }
+}
+
+/* 结束按钮：比计时器大一圈 */
+#btn-end-game {
+  padding: 14px 36px;
+  font-size: 2.2rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  border-radius: 10px;
+  background: #3d1a4a;
+  color: #e9b8ff;
+  border: 2px solid #5a2870;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 12px rgba(168, 85, 247, 0.35);
+  min-width: 180px;
+}
+
+#btn-end-game:hover {
+  background: #5a2870;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 20px rgba(168, 85, 247, 0.6);
+}
+
+#btn-end-game:active {
+  transform: scale(0.97);
+}
+
+.game-status {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.warning-text {
+  color: var(--accent2);
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reaction-area {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+  min-height: 60px;
+  overflow-y: auto;
+}
+
+.reaction-text {
+  font-size: 1.1rem;
+  text-align: center;
+  line-height: 1.7;
+  text-shadow: 0 0 10px rgba(200,150,255,0.5);
+}
+
+/* 食物选项容器 */
+.food-options {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.food-option-wrapper {
+  position: relative;
+  flex: 1 1 120px;
+  max-width: 180px;
+  display: flex;
+}
+
+.food-option-btn {
+  flex: 1;
+  width: 100%;
+  max-width: none;
+  background: rgba(30,20,45,0.7);
+  border: 1px solid rgba(160,120,200,0.3);
+  border-radius: 12px;
+  padding: 15px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.food-option-btn:hover:not(:disabled) {
+  background: rgba(60,40,90,0.8);
+  border-color: var(--accent2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.food-option-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  filter: grayscale(0.5);
+}
+
+.food-option-btn.cooling {
+  background: rgba(20,15,30,0.5);
+  border-color: #555;
+}
+
+.food-icon { font-size: 2.5rem; }
+.food-name { font-size: 1rem; color: #f0e6ff; }
+.food-emotion { display: none; }
+
+/* 食物信息图标 */
+.food-info-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(160,120,200,0.5);
+  background: rgba(30,20,45,0.95);
+  color: #b18cd9;
+  font-size: 0.75rem;
+  font-weight: bold;
+  font-style: italic;
+  font-family: Georgia, serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  z-index: 2;
+  transition: all 0.2s;
+}
+
+.food-info-btn:hover,
+.food-info-btn:active {
+  background: rgba(60,40,90,0.95);
+  color: #e9b8ff;
+  border-color: #a855f7;
+  box-shadow: 0 0 8px rgba(168,85,247,0.5);
+}
+
+/* 狂暴滚动容器 */
+#rage-scroll {
+  display: none;
+  position: relative;
+  height: 100px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.5);
+  border-radius: 12px;
+  margin: 10px 0;
+  white-space: nowrap;
+}
+
+#rage-scroll.active {
+  display: block;
+}
+
+#rage-scroll-inner {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform;
+  animation: rageScrollInner 2s linear infinite;
+}
+
+@keyframes rageScrollInner {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.rage-food-item {
+  display: inline-block;
+  width: 120px;
+  height: 100px;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: top;
+  transition: transform 0.1s;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.rage-food-item:active {
+  transform: scale(0.9);
+}
+
+.rage-food-icon {
+  display: block;
+  font-size: 2.5rem;
+}
+
+.rage-food-name {
+  display: block;
+  font-size: 0.9rem;
+  color: #f0e6ff;
+}
+
+.item-bar {
+  background: rgba(0,0,0,0.3);
+  border-radius: 12px;
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.item-bar-header {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.carried-items {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.item-slot {
+  background: rgba(40,30,60,0.6);
+  border: 1px solid rgba(160,120,200,0.3);
+  border-radius: 8px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.item-slot:hover {
+  border-color: var(--gold);
+}
+
+.item-slot.used {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.item-slot.passive {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.item-slot.passive:hover {
+  border-color: rgba(160,120,200,0.3);
+}
+
+.item-icon { font-size: 1.2rem; }
+.item-name { font-size: 0.85rem; }
+.item-uses { font-size: 0.7rem; color: var(--gold); }
+
+/* 道具信息图标 */
+.item-info-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(160,120,200,0.5);
+  background: rgba(30,20,45,0.95);
+  color: #b18cd9;
+  font-size: 0.6rem;
+  font-weight: bold;
+  font-style: italic;
+  font-family: Georgia, serif;
+  cursor: pointer;
+  margin-left: 2px;
+  padding: 0;
+  line-height: 1;
+  transition: all 0.2s;
+}
+
+.item-info-btn:hover,
+.item-info-btn:active {
+  background: rgba(60,40,90,0.95);
+  color: #e9b8ff;
+  border-color: #a855f7;
+}
+
+/* 暴走红光覆盖层 */
+#rampage-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(255,0,0,0.6) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+/* 全红狂躁覆盖层 */
+#rage-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  pointer-events: auto;
+  background: rgba(255, 0, 0, 0.9);
+  opacity: 0;
+  z-index: 20;
+}
+
+/* ========== 响应式调整 ========== */
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .timer-display { font-size: 1.8rem; }
+  #btn-end-game { font-size: 2rem; padding: 12px 30px; min-width: 160px; }
+  .reaction-text { font-size: 1rem; }
+  .food-option-btn { padding: 12px 8px; }
+  .food-icon { font-size: 2rem; }
+  .food-name { font-size: 0.9rem; }
+  .rage-food-item { width: 100px; height: 90px; }
+  .rage-food-icon { font-size: 2rem; }
+}
+
+@media (max-width: 767px) {
+  .game-container {
+    padding: 8px;
+    gap: 6px;
+    height: 100dvh;
+    padding-top: calc(8px + env(safe-area-inset-top, 0px));
+    padding-left: calc(8px + env(safe-area-inset-left, 0px));
+    padding-right: calc(8px + env(safe-area-inset-right, 0px));
+    padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* 手机端头部仍竖排：计时器 → 结束按钮 → 警告文字 */
+  .game-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    flex-wrap: nowrap;
+  }
+
+  .timer-display {
+    font-size: 1.4rem;
+  }
+
+  /* 手机端结束按钮：比计时器大一圈 */
+  #btn-end-game {
+    padding: 10px 26px;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    border-radius: 8px;
+    min-width: 140px;
+    border-width: 2px;
+  }
+
+  .game-status {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .warning-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-size: 0.75rem;
+  }
+
+  .reaction-area {
+    padding: 8px;
+    min-height: 0;
+    max-height: none;
+    border-radius: 8px;
+  }
+  .reaction-text {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .food-options {
+    gap: 5px;
+  }
+  .food-option-wrapper {
+    flex: 1 1 70px;
+    max-width: 110px;
+  }
+  .food-option-btn {
+    padding: 8px 5px;
+    gap: 4px;
+    border-radius: 8px;
+  }
+  .food-icon { font-size: 1.6rem; }
+  .food-name { font-size: 0.75rem; }
+
+  .food-info-btn {
+    width: 18px;
+    height: 18px;
+    font-size: 0.65rem;
+    top: 3px;
+    right: 3px;
+  }
+
+  #rage-scroll {
+    height: 80px;
+  }
+  .rage-food-item {
+    width: 90px;
+    height: 80px;
+    padding: 3px;
+  }
+  .rage-food-icon { font-size: 1.8rem; }
+  .rage-food-name { font-size: 0.75rem; }
+
+  .item-bar {
+    padding: 6px 8px;
+    gap: 5px;
+    border-radius: 8px;
+  }
+  .item-bar-header {
+    font-size: 0.7rem;
+  }
+  .item-slot {
+    padding: 3px 6px;
+    font-size: 0.7rem;
+    gap: 4px;
+  }
+  .item-icon { font-size: 0.9rem; }
+  .item-name { font-size: 0.7rem; }
+  .item-uses { font-size: 0.6rem; }
+
+  .item-info-btn {
+    width: 14px;
+    height: 14px;
+    font-size: 0.55rem;
+  }
+}
